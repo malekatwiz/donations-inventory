@@ -1,0 +1,30 @@
+﻿@page "/new-item"
+<h2>Add New Item</h2>
+
+<EditForm Model="@newItem" OnInvalidSubmit="@Handle">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+    <ValidationSummary></ValidationSummary>
+    <p>
+        <label>
+            Product Name:
+            <InputText @bind-Value="@newItem.Name"></InputText>
+        </label>
+    </p>
+    <p>
+        <label>
+            Product Description (optional):
+            <InputText @bind-Value="@newItem.Description"></InputText>
+        </label>
+    </p>
+
+    <button type="submit">Save</button>
+</EditForm>
+
+@code {
+    private Models.ItemInputModel newItem = new();
+
+    private void Handle()
+    {
+        
+    }
+}

@@ -1,0 +1,29 @@
+﻿@page "/items1"
+
+<TableTemplate Items="AllItems" Context="item">
+    <TableHeader>
+        <th>Type</th>
+        <th>Name</th>
+    </TableHeader>
+    <RowTemplate>
+        <td>@item.Name</td>
+        <td>@item.CategoryId</td>
+    </RowTemplate>
+</TableTemplate>
+
+@code {
+    [Parameter, AllowNull]
+    public List<Models.ItemInputModel> AllItems { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        AllItems = new List<Models.ItemInputModel>
+        {
+            new ItemInputModel
+            {
+                Name = "product 1"
+            }
+        };
+        return base.OnInitializedAsync();
+    }
+}
