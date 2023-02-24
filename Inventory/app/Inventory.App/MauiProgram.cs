@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-using Inventory.App.Data;
+﻿using Inventory.Backend;
+using Microsoft.Extensions.Logging;
 
 namespace Inventory.App;
 
@@ -9,8 +9,11 @@ public static class MauiProgram
 	{
 		var builder = MauiApp.CreateBuilder();
 
-        builder
-			.UseMauiApp<App>()
+		builder.Services.AddDatabase()
+			.AddServices();
+
+		builder
+            .UseMauiApp<App>()
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -22,8 +25,6 @@ public static class MauiProgram
 		builder.Services.AddBlazorWebViewDeveloperTools();
 		builder.Logging.AddDebug();
 #endif
-
-		builder.Services.AddSingleton<WeatherForecastService>();
 
 		return builder.Build();
 	}

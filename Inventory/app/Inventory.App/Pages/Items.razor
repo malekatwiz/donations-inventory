@@ -1,29 +1,30 @@
-﻿@page "/items1"
+﻿@page "/items"
+@using Inventory.Backend.Abstraction;
+@inject IItemsOperations _itemsOperations
 
 <TableTemplate Items="AllItems" Context="item">
     <TableHeader>
-        <th>Type</th>
+        <th>Category</th>
         <th>Name</th>
     </TableHeader>
     <RowTemplate>
+        <td>@item.Category</td>
         <td>@item.Name</td>
-        <td>@item.CategoryId</td>
     </RowTemplate>
 </TableTemplate>
 
 @code {
     [Parameter, AllowNull]
-    public List<Models.ItemInputModel> AllItems { get; set; }
+    public List<Models.ItemInputModel> AllItems { get; set; } = new();
 
     protected override Task OnInitializedAsync()
     {
-        AllItems = new List<Models.ItemInputModel>
-        {
-            new ItemInputModel
+        AllItems = _itemsOperations.GetItems().Select(x => new ItemInputModel
             {
-                Name = "product 1"
-            }
-        };
+                Name = x.Name,
+                Category = x.Category,
+            }).ToList();
+
         return base.OnInitializedAsync();
     }
 }

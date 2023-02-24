@@ -1,0 +1,31 @@
+﻿@using Inventory.Backend
+@inject Inventory.Backend.Abstraction.IItemsOperations _itemsOperations
+@page "/product-lookup"
+
+<h3>Products</h3>
+
+    <div class="col-md-6">
+        <label for="itemBarCode" class="form-label">Bar Code</label>
+        <InputText id="itemBarCode" class="form-control" @bind-Value=@InputModel.BarCode></InputText>
+        <button type="submit" class="btn btn-primary" onsubmit="@HandleAsync()">Search</button>
+    </div>
+
+<div class="card" style="width: 18rem;">
+    <img src="@Product?.Images?.FirstOrDefault()" class="card-img-top" alt="product-image">
+    <div class="card-body">
+        <h5 class="card-title">@Product.Title</h5>
+        <h6 class="card-title">@Product.Brand</h6>
+        <p class="card-text">@Product.Description</p>
+    </div>
+</div>
+
+@code {
+    private ProductLookupModel InputModel = new();
+    private ProductResult Product = new();
+
+    private async Task HandleAsync(CancellationToken cancellationToken = default)
+    {
+        var result = await _itemsOperations.BarCodeLookup(InputModel.BarCode);
+        Product = result?.Products.FirstOrDefault();
+    }
+}

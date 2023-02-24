@@ -7,7 +7,7 @@ public class ItemInputModel
     public string Description { get; set; }
 
     [Required]
-    public int CategoryId { get; set; }
+    public string Category { get; set; }
 
     [Required, MinLength(6)]
     public string BarCode { get; set; }
